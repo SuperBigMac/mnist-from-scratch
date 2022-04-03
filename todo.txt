@@ -1,0 +1,15 @@
+
+to do list:
+  -   backpropagation!
+
+
+values we need to find derivative of cost with respect to a certain weight:
+  -   activation of previous connection
+  -   unnormalized output of node
+  -   Case 1: the next layer is a hidden layer
+      -   weights connecting that node to next layers
+          -   iterate over this
+      -   unnormalized output of those nodes
+  -   Case 2: the next layer is the output layer
+      -  final output (normalized)
+      -  desired output at node
