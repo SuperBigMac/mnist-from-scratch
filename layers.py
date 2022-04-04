@@ -31,11 +31,11 @@ def sigmoid(num):
     return 1/(1+exp(-1 * num))
 
 class Layer:
-    def __init__(self, flag=''): #, layer_size=1, init_Weight=1, init_Bias=0):
+    def __init__(self, flag='', size = 0): #, layer_size=1, init_Weight=1, init_Bias=0):
         #self.nodes = [[init_Weight, init_Bias] for i in range(layer_size)]
         self.TYPE = "layer"
         self.FLAG = flag
-        self.SIZE = 0
+        self.SIZE = size
 
     def evaluate(array):
         raise NotImplementedError("No evaluation function implemented.")
@@ -45,9 +45,8 @@ class Layer:
 
 class Convolutional_Layer(Layer):
     def __init__(self, layer_size=1, init_Bias=0, init_Weight=1, previous_size=1, random_init=True, flag = ''):
-        super().__init__(flag)
+        super().__init__(flag = flag, size = layer_size)
         self.nodes = [[[init_Weight for i in range(previous_size)], init_Bias] for n in range(layer_size)]
-        self.SIZE = layer_size
         if random_init:
             for i in range(len(self.nodes)):
                 for k in range(len(self.nodes[i][0])):
@@ -91,7 +90,7 @@ class Convolutional_Layer(Layer):
 
 class Input_Layer(Layer):
     def __init__(self, input_dimensions=1, layer_size=1, flag = ''):
-        super().__init__(flag)
+        super().__init__(flag = flag, size = layer_size)
         self.TYPE = "input"
         self.input_dimension = input_dimensions
 
@@ -105,7 +104,7 @@ class Input_Layer(Layer):
 
 class Activation_Layer(Layer):
     def __init__(self, activationMode, flag = ''):
-        super().__init__('flag')
+        super().__init__(flag = flag, size = layer_size)
         self.mode = activationMode
         self.TYPE = "activation"
 

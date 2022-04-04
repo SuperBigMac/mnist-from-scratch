@@ -27,7 +27,7 @@ class NN:
 
     def add_convolutional_layer(self, layer_size, activation_mode, flag = ''):
         if len(self.layers) == 1:
-            self.layers.append(layers.Convolutional_Layer(layer_size = layer_size, previous_size = self.layers[0].SIZE))
+            self.layers.append(layers.Convolutional_Layer(layer_size = layer_size, previous_size = self.layers[-1].SIZE))
         elif len(self.layers) > 1:
             self.layers.append(layers.Convolutional_Layer(layer_size = layer_size, previous_size = self.layers[-2].SIZE))
         else:
@@ -63,11 +63,29 @@ class NN:
         prev_val = self.outputs[layer_index-1][weight_index]
         activation_deriv = sigmoid_deriv(self.outputs[layer_index+1][weight_index])
 
+        gradient = prev_val * activation_deriv * next_weight_gradient(layer_index, weight_index)
+
         return sum(prev_val * activation_deriv * next_weight_gradient(next_layer, weights))
 
-        next_weight_gradient():
-            return curr_weight * activation+deriv * next_weight_gradient(next_layer, weights)
+    def next_weight_gradient(layer_index, prev_index, curr_index):
+        #current layer = self.layers[layer_index]
+        if self.layers[layer_index].FLAG == 'output':
+            return 2 * (self.outputs[-1][curr_index] - self.training_data[curr_index][1])
 
+        weight = self.layers[layer_index].nodes[curr_index][0][prev_index]
+        unnormalized_output = self.outputs[layer_index][curr_index]
+
+        """figure out how to iterate through the tree recursively"""
+        return weight * unnormalized_output * next_weight_gradient(next_convolutional_layer(layer_index + 1), curr_index, curr_index)
+
+    #searches for next convolutional layer including the starting index
+    def next_convolutional_layer(self, start_index = 0):
+        i = start_index
+        while i < len(self.layers) - 1:
+            if self.layers[i].type == 'convolutional':
+                return i
+
+        return -1 #no convolutional layer was found
     def bias_gradient(self, layer_index, bias_index):
         pass
 

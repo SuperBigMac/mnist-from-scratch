@@ -1,6 +1,7 @@
 
 to do list:
   -   backpropagation!
+  -   figure out how to iterate through weight_gradient recursively
 
 
 values we need to find derivative of cost with respect to a certain weight:
