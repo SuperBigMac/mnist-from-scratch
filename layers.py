@@ -31,8 +31,7 @@ def sigmoid(num):
     return 1/(1+exp(-1 * num))
 
 class Layer:
-    def __init__(self, flag='', size = 0): #, layer_size=1, init_Weight=1, init_Bias=0):
-        #self.nodes = [[init_Weight, init_Bias] for i in range(layer_size)]
+    def __init__(self, flag='', size = 0):
         self.TYPE = "layer"
         self.FLAG = flag
         self.SIZE = size
@@ -84,7 +83,6 @@ class Convolutional_Layer(Layer):
         out = []
         for i in range(len(self.nodes)):
             out.append(np.dot(self.nodes[i][0], input_array) + self.nodes[i][1])
-        #return np.add(weighted_sum(input_array, [weight[0] for weight in self.nodes]), [bias[1] for bias in self.nodes])
         return out
 
 
@@ -103,8 +101,8 @@ class Input_Layer(Layer):
             raise Exception("Too many input dimensions. Current: " + self.input_dimension)
 
 class Activation_Layer(Layer):
-    def __init__(self, activationMode, flag = ''):
-        super().__init__(flag = flag, size = layer_size)
+    def __init__(self, activationMode, size = 0, flag = ''):
+        super().__init__(flag = flag, size = size)
         self.mode = activationMode
         self.TYPE = "activation"
 
@@ -131,7 +129,8 @@ def main():
     layer = Convolutional_Layer(layer_size = 2, previous_size=2)
     layer.set_weights(arr1)
     layer.adjust_weights(arr1)
-    print(layer.nodes)
+
+    print([layer.nodes[i].shape for i in range(len(layer.nodes))])
 
     """IN = Input_Layer(2)
     arr1 = IN.evaluate(arr1)
