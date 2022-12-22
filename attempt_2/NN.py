@@ -132,19 +132,22 @@ class NN:
         
 
 def main():
-    network = NN([1,1])
-    for i in range(3000):
-        network.setExpected([0.3])
-        network.eval([0])
+    network = NN([3,10,10,3])
+    for i in range(1000):
+        network.setExpected([0.1,0.9,0.5])
+        network.eval([-2,0,3])
         network.GD()
 
-        
-        network.setExpected([0.4])
-        network.eval([1])
+        network.setExpected([0.1,0.2,0.3])
+        network.eval([1,2,3])
         network.GD()
 
-        network.setExpected([0.7])
-        network.eval([2])
+        network.setExpected([0.5,0.3,0.9])
+        network.eval([2,1,1])
+        network.GD()
+
+        network.setExpected([0.2,0.3,0.4])
+        network.eval([1,3,5])
         network.GD()
         
         if i % 100 == 0:
@@ -158,9 +161,10 @@ def main():
     #print(adj)
     print("----")
 
-    print(network.eval([0]))
-    print(network.eval([1]))
-    print(network.eval([2]))
+    print(network.eval([-2,0,3]))
+    print(network.eval([1,2,3]))
+    print(network.eval([2,1,1]))
+    print(network.eval([1,3,5]))
         
 
 
